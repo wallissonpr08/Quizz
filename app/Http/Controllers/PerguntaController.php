@@ -2,13 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Contracts\View\View;
+use App\Models\Pergunta;
 use Illuminate\Http\Request;
 
 class PerguntaController extends Controller
 {
-    public function inicio(): View
+    // Mostra a página inicial de boas vindas ao quizz
+    public function inicio()
     {
-        return view(view: 'perguntas.inicio');
+        $total_perguntas = Pergunta::count();
+
+        return view(
+            'perguntas.inicio',
+            compact('total_perguntas')
+        );
+    }
+
+    // Mostra a página para responder as perguntas do quizz
+    public function responder()
+    {
+        // Pega todas as perguntas do banco de dados
+        $perguntas = Pergunta::all();
+
+        return view(
+            'perguntas.responder',
+            compact('perguntas')
+        );
     }
 }
